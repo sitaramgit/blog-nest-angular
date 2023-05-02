@@ -21,7 +21,29 @@ $ npm install -g ts-node
 $ npm run start:dev
 - npm run typeorm migration:run -- -d ormconfig.ts
 ```
+- to create users crud
+```bash
+$ nest g resource modules/users
+```
 
+- to validate post data with dto file, after follow the main.ts app.useGlobalPipes
+```bash
+$ npm i --save class-validator class-transformer
+```
+
+- install the bcrypt package for encrypting user passwords as we don't want user passwords to be saved in plain text.
+```bash
+$ npm i bcrypt
+$ npm i -D @types/bcrypt
+```
+
+- Authentication with passport & JWT
+```bash
+$ npm install --save @nestjs/passport passport passport-local
+$ npm install --save-dev @types/passport-local
+$ npm install --save @nestjs/jwt passport-jwt
+$ npm install --save-dev @types/passport-jwt
+```
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
