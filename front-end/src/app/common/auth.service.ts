@@ -11,4 +11,7 @@ export class AuthService {
   public authenticateUser(payload: any){
     return this.http.post('http://localhost:3200/users/login',payload);
   }
+  public createUser(payload: any){
+    return this.http.post('http://localhost:3200/users',payload);
+  }
 }

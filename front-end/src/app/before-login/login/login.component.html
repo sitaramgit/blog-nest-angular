@@ -7,7 +7,7 @@
       
       <div class="border border-warning p-5 shadow p-4 mb-4 bg-white">
         <div class="d-flex justify-content-center">
-            <p class="h4">Login</p>
+            <p class="h4">Sign in</p>
         </div>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="was-validated">
           <div class="mb-3 mt-3">
@@ -42,6 +42,8 @@
               Submit
             </button>
           </div>
+          <br>
+          <a routerLink="/sign-up" class="link-primary">Don't have account? click here</a>
         </form>
       </div>
     </div>

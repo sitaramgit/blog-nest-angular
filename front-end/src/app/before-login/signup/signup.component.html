@@ -1,0 +1,77 @@
+<br /><br /><br /><br />
+<div class="container">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div class="border border-warning p-5 shadow p-4 mb-4 bg-white">
+        <div class="d-flex justify-content-center">
+            <p class="h4">Sign up</p>
+        </div>
+        <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="was-validated">
+            <div class="mb-3 mt-3">
+                <label for="uname" class="form-label">Full name:</label>
+                <input
+                type="name" formControlName="name"
+                  class="form-control"
+                  id="name"
+                  placeholder="Enter username"
+                  name="name"
+                  required
+                />
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+          <div class="mb-3 mt-3">
+            <label for="uname" class="form-label">Username:</label>
+            <input
+            type="email" formControlName="email"
+              class="form-control"
+              id="uname"
+              placeholder="Enter username"
+              name="uname"
+              required
+            />
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+          </div>
+          <div class="mb-3">
+            <label for="pwd" class="form-label">Password:</label>
+            <input
+              type="password" formControlName="password"
+              class="form-control"
+              id="pwd"
+              placeholder="Enter password"
+              name="pswd"
+              required
+            />
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="pwd" class="form-label">Confirm Password:</label>
+            <input
+              type="password" formControlName="confirmPassword"
+              class="form-control"
+              id="pwd"
+              placeholder="Enter confirm password"
+              name="pswd"
+              required
+            />
+            <div class="valid-feedback">Valid.</div>
+            <div *ngIf="signUpForm.get('confirmPassword')?.hasError('passwordMismatch')" class="invalid-feedback">Passwords do not match.</div>
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" [disabled]="!signUpForm.valid" class="btn btn-outline-primary btn-block">
+              Submit
+            </button>
+          </div>
+          <br>
+          <a routerLink="/login" class="link-primary">Login</a>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>

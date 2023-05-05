@@ -30,7 +30,7 @@ export class UsersService {
   }
   async validateUser(email: string, pass: string): Promise<any> {
     const user = await this.findOne({ email: email });
-    console.log(await bcrypt.hash(pass, 10));
+    // console.log(await bcrypt.hash(pass, 10));
     if (user && bcrypt.compare(user.password, await bcrypt.hash(pass, 10))) {
       const { password, ...result } = user;
       return result;
@@ -39,11 +39,11 @@ export class UsersService {
   }
 
   async login(user: any) {
-    console.log(user)
+    // console.log(user)
     const isUserExisted = await this.usersRepository.findOne({
       where: { email: user.body.email },
     });
-    console.log(user.body, isUserExisted);
+    // console.log(user.body, isUserExisted);
     if (!isUserExisted) {
       throw new HttpException('No user found', HttpStatus.NOT_FOUND);
     }
