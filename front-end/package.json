@@ -1,6 +1,7 @@
 {
   "name": "front-end",
   "version": "0.0.0",
+  "serverUrl": "http://localhost:3200",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -22,6 +23,7 @@
     "@ng-bootstrap/ng-bootstrap": "^14.1.1",
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
+    "ckeditor4-angular": "^3.3.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "^0.13.0"

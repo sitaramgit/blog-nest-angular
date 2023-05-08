@@ -5,13 +5,13 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
-
+  public serverUrl = 'http://localhost:3200';
   constructor(private http: HttpClient) { }
 
   public authenticateUser(payload: any){
-    return this.http.post('http://localhost:3200/users/login',payload);
+    return this.http.post(this.serverUrl+'/users/login',payload);
   }
   public createUser(payload: any){
-    return this.http.post('http://localhost:3200/users',payload);
+    return this.http.post(this.serverUrl+'/users',payload);
   }
 }

@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastsContainer } from './toasts-container.component';
 import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import { CKEditorModule } from 'ckeditor4-angular';
 const primengModules = [
   FormsModule,
   ReactiveFormsModule,
@@ -16,6 +17,7 @@ const primengModules = [
   NgIf,
   NgTemplateOutlet,
   NgbToastModule,
+  CKEditorModule,
 ];
 @NgModule({
   declarations: [],

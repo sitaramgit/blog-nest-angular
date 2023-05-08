@@ -23,6 +23,10 @@ const routes: Routes = [
         path: 'home',
         loadChildren: () => import('./after-login/home/home.module').then(m => m.HomeModule)
       },
+      {
+        path: 'create-post',
+        loadChildren: () => import('./after-login/create-post/create-post.module').then(m => m.CreatePostModule)
+      }
     ]
   }
 ];
