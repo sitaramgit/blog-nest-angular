@@ -9,10 +9,16 @@ export class Post {
   title: string;
 
   @Column()
+  user_id: number;
+
+  @Column({ length: 20000 })
   description: string;
 
   @Column({ nullable: true })
   image: string;
+
+  @Column({ default: true })
+  is_active: boolean;
 
   @CreateDateColumn()
   created_at: Date;

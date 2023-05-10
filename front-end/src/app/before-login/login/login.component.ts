@@ -20,10 +20,12 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
+    console.log(this.authService.getUserDetailsFromLocal())
   }
 
   onSubmit() {
     this.authService.authenticateUser(this.loginForm.value).subscribe(data=>{
+      this.authService.storeTheTokenAndUserDetails(data);
       this.route.navigateByUrl('/home');
     },
     (error)=>{

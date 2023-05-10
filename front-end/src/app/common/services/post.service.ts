@@ -13,4 +13,12 @@ export class PostService {
   createPost(payload: any){
     return this.http.post(this.authService.serverUrl+'/posts',payload);
   }
+
+  getAllPosts(){
+    return this.http.get(this.authService.serverUrl+'/posts');
+  }
+
+  getPostById(id: number){
+    return this.http.get(this.authService.serverUrl+'/posts/'+id);
+  }
 }

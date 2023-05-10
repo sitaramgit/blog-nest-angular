@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ErrorHandler } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Route, Router } from '@angular/router';
 import { PostService } from 'src/app/common/services/post.service';
+import { ToastService } from 'src/app/common/toast.service';
 
 @Component({
   selector: 'app-create-post',
@@ -12,7 +14,7 @@ export class CreatePostComponent {
   selectedFile: any;
   imageSrc: any;
 
-  constructor(private formBuilder: FormBuilder, private postService: PostService) {
+  constructor(private toastService:ToastService, private router: Router, private formBuilder: FormBuilder, private postService: PostService) {
     this.blogPostForm = this.formBuilder.group({
       title: '',
       description: '',
@@ -20,7 +22,6 @@ export class CreatePostComponent {
     });
   }
   onFileSelected(target: any) {
-    console.log(target.files)
     const files = target.files;
     this.selectedFile = files.item(0);
     this.blogPostForm?.get('image')?.setValue(this.selectedFile);
@@ -33,10 +34,14 @@ export class CreatePostComponent {
     formData.append('title', this.blogPostForm.get('title')?.value);
     formData.append('description', this.blogPostForm.get('description')?.value);
     formData.append('image', this.selectedFile, this.selectedFile.name);
-    console.log(formData)
     this.postService.createPost(formData).subscribe(data=>{
-      console.log(data)
-    })
+      this.router.navigate(['home']);
+    },
+    (error: ErrorEvent) => {
+      const serverErrors: any = error.error.message;
+      this.toastService.show(serverErrors, { classname: 'bg-danger text-light', delay: 15000 });
+    }
+    )
     // send formData to server for processing
   }
   previewImage() {
@@ -44,7 +49,6 @@ export class CreatePostComponent {
     reader.readAsDataURL(this.selectedFile);
     reader.onload = () => {
       this.imageSrc = reader.result as string;
-      console.log(this.imageSrc)
     }
     }
 

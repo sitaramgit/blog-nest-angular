@@ -47,6 +47,9 @@ $ npm install --save-dev @types/passport-jwt
 
  file upload
 $ npm install multer @types/multer @types/node
+
+- to show the filese
+$  npm install --save @nestjs/serve-static
 ```
 ## Description
 

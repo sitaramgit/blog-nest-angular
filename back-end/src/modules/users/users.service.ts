@@ -60,7 +60,7 @@ export class UsersService {
     this.usersRepository.update(isUserExisted.id, { token: newToken.split(".")[1] });
     return {
       userData: result,
-      token: this.generateToken(result)
+      token: newToken
     }
   }
   public generateToken(user): string {

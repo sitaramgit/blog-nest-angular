@@ -3,13 +3,15 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 // import dotenv from 'dotenv';
 import configuration from './config/configuration';
 import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER } from './config/constants';
 import { UsersModule } from './modules/users/users.module';
 import { PostsModule } from './modules/posts/posts.module';
 // dotenv.config();
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -18,7 +20,13 @@ import { PostsModule } from './modules/posts/posts.module';
       load: [configuration],
     }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
+      imports: [
+        ConfigModule,
+        ServeStaticModule.forRoot({
+          rootPath: join(__dirname, '../..', 'uploads'),
+          serveRoot: '/uploads',
+        }),
+      ],
       useFactory: (configService: ConfigService) => ({
         type: 'mariadb',
         host: configService.get(DB_HOST),

@@ -11,6 +11,8 @@ import { UnAuthenticatedComponent } from './layout/un-authenticated/un-authentic
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { AsideComponent } from './layout/aside/aside.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './common/services/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,7 @@ import { AsideComponent } from './layout/aside/aside.component';
     SharedModule,
     NgbModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
