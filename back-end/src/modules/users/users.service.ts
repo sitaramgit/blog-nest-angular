@@ -43,7 +43,7 @@ export class UsersService {
   }
 
   async login(user: any) {
-    // console.log(user)
+    // console.log(user);
     const isUserExisted = await this.usersRepository.findOne({
       where: { email: user.body.email },
     });
