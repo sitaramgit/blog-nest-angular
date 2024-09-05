@@ -7,7 +7,13 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 // import dotenv from 'dotenv';
 import configuration from './config/configuration';
-import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER } from './config/constants';
+import {
+  DB_DATABASE,
+  DB_HOST,
+  DB_PASSWORD,
+  DB_PORT,
+  DB_USER,
+} from './config/constants';
 import { UsersModule } from './modules/users/users.module';
 import { PostsModule } from './modules/posts/posts.module';
 // dotenv.config();
@@ -36,9 +42,9 @@ import { PostsModule } from './modules/posts/posts.module';
         database: configService.get(DB_DATABASE),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: true,
-        logging: true
+        logging: true,
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
     UsersModule,
     PostsModule,

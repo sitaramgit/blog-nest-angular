@@ -8,22 +8,26 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(User)
-  private usersRepository: Repository<User>,
-  private jwtService: JwtService,){}
-
+  constructor(
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
+    private jwtService: JwtService,
+  ) {}
 
   async create(data: CreateUserDto) {
     data.password = await bcrypt.hash(data.password, 10);
     try {
-      let response = await this.usersRepository.save(data)
+      const response = await this.usersRepository.save(data);
       if (response) {
         const { password, ...result } = response;
         return result;
       }
     } catch (error) {
       if (error instanceof QueryFailedError) {
-        throw new HttpException('Email address already exists', HttpStatus.CONFLICT);
+        throw new HttpException(
+          'Email address already exists',
+          HttpStatus.CONFLICT,
+        );
       }
       throw error;
     }
@@ -57,16 +61,17 @@ export class UsersService {
     }
     const { password, token, ...result } = isUserExisted;
     const newToken = this.generateToken(result);
-    this.usersRepository.update(isUserExisted.id, { token: newToken.split(".")[1] });
+    this.usersRepository.update(isUserExisted.id, {
+      token: newToken.split('.')[1],
+    });
     return {
       userData: result,
-      token: newToken
-    }
+      token: newToken,
+    };
   }
   public generateToken(user): string {
     return this.jwtService.sign({ id: user.id, email: user.email });
   }
-
 
   public async refresh(user: User): Promise<string> {
     this.usersRepository.update(user.id, { updated_at: new Date() });
@@ -86,7 +91,6 @@ export class UsersService {
   findAll() {
     return `This action returns all users`;
   }
-
 
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
