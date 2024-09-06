@@ -8,7 +8,7 @@ const toastMessage = (message: string, severity: 'error' | 'success' | 'info' | 
        const toastContainer: HTMLElement | any = document.getElementById(toastId);
        if (!toastContainer) {
          const div = document.createElement('div');
-         div.id = 'toast-messages';
+         div.id = toastId;
          document.body.appendChild(div);
        }
         // Render the toast

@@ -1,11 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Login from './pages/un-auth/Login';
+import "./App.css";
+import Login from "./pages/un-auth/Login";
+import Dashboard from "./pages/auth/Dashboard";
+import { Route, Routes } from "react-router-dom";
+import ProtectedRouts from "./layout/ProtectedRouts";
 
-function App() {
+const App = () => {
   return (
-    <Login/>
+    <ProtectedRouts>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route element={<Dashboard />} path={"/dashboard"} />
+      </Routes>
+    </ProtectedRouts>
   );
 }
 

@@ -3,32 +3,27 @@ import axios from "axios";
 import { memo, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
-import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Container from "@mui/material/Container";
 import { Box, Button, Grid, TextField } from "@mui/material";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import GoogleIcon from "@mui/icons-material/Google";
 import Link from "@mui/material/Link";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { API_REQUESTS } from "../../common/apiRequests";
 import { httpService } from "../../services/httpService";
 import toastMessage from "../../hooks/Toast";
+import useLoader from "../../hooks/Loader";
+import { useDispatch } from "react-redux";
+import { accessToken } from "../../store/reducer /loginSlice";
+import { useNavigate } from 'react-router-dom';
+
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const { openLoader, closeLoader } = useLoader();
   const responseMessage = (response: any) => {
     console.log(response);
   };
@@ -54,21 +49,19 @@ const Login = () => {
   });
 
   const login = async (data: any) => {
+    openLoader();
     API_REQUESTS.USER_LOGIN.PAYLOAD = data;
     // console.log(API_REQUESTS.USER_LOGIN)
     try {
       const request = await httpService(API_REQUESTS.USER_LOGIN);
-      console.log(request)
-    //   dispatch(accessToken(request));
-      setError({
-        isError: true,
-        message: "Login successful!",
-        alertType: "success",
-      });
+      dispatch(accessToken(request));
+      navigate('/dashboard')
       toastMessage('Login successful!', 'success');
     } catch (error) {
       console.log(error)
       toastMessage('User not existed.', 'error');
+    } finally {
+      closeLoader()
     }
   };
 
