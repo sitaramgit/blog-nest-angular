@@ -17,3 +17,16 @@ export const stringToColor = (string: string) => {
   
     return color;
   }
+  export const updateUrlParams = (url: string, params: any) => {
+    // Iterate through the keys of the params object
+    for (let key in params) {
+      if (params[key]) {
+        // Replace the placeholders (like :id, :user) with their values
+        url = url.replace(`:${key}`, params[key]);
+      } else {
+        // Remove the placeholder if value is not provided
+        url = url.replace(`/:${key}`, '');  // Removes the param and the preceding slash
+      }
+    }
+    return url;
+  }

@@ -31,11 +31,11 @@ export class PostsService {
   findAll() {
     // return this.postRepository.createQueryBuilder('posts').innerJoin('users', 'users', 'users.id = posts.user_id').getMany();
     return this.postRepository.find({ where: { is_active: true } });
-
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} post`;
+    // return `This action returns a #${id} post`;
+    return this.postRepository.findOne({ where: { id } });
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {

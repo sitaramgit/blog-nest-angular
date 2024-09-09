@@ -1,8 +1,7 @@
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import store from "../store/store";
-import { Layout } from "./Layout";
+import Layout from "./Layout";
 interface ProtectedRouteProps {
   component: any;
   path: string | string[];
@@ -13,7 +12,7 @@ const ProtectedRouts = ({ children }: any) => {
   const navigate = useNavigate();
   const router = useLocation();
   console.log(router.pathname);
-  const unProtectedRoutes = ["/login", "sign-up"];
+  const unProtectedRoutes = ["/login", "/sign-up"];
   const isAuthenticated = useSelector(
     (state: any) => state.login?.userDetails?.token
   );
@@ -35,4 +34,4 @@ const ProtectedRouts = ({ children }: any) => {
 
   return isAuthenticated ?  <Layout>{children}</Layout> : <div>{children}</div>;
 };
-export default ProtectedRouts;
+export default memo(ProtectedRouts);

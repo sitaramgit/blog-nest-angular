@@ -4,6 +4,10 @@ export const apiEndPoints = {
         socialLogin: '/users/socialLogin',
         login: '/users/login'
     },
+    posts: {
+        allPosts: '/posts',
+        postDetails: '/posts/:postId'//concat post id
+    },
     host_api: {
         host: 'http://localhost:3200'
     }

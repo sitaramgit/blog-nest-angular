@@ -109,8 +109,7 @@ const SideMenuContainer = styled('div')({
     display: 'flex',
     justifyContent: 'center',
   })
-
-export const Layout = ({ children }: LayoutProps): ReactElement => {
+ const Layout = ({ children }: LayoutProps): ReactElement => {
   // Legacy code
   // @TODO fix User reducer types
   // User the property data on the user state doesn't have any type
@@ -313,3 +312,4 @@ const handleAllMenuItemClick = (item: any, status: boolean) => {
     </ThemeProvider>
   )
 }
+export default Layout

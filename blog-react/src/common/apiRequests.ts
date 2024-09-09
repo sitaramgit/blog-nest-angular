@@ -15,5 +15,18 @@ export const API_REQUESTS = {
         METHOD: 'POST',
         URL: apiEndPoints.auth.socialLogin,
         PAYLOAD: {}
+    },
+    GET_ALL_POSTS: {
+        METHOD: 'GET', 
+        URL: apiEndPoints.posts.allPosts,
+        PAYLOAD: {}
+    },
+    GET_POST_DETAILS: {
+        METHOD: 'GET', 
+        URL: apiEndPoints.posts.postDetails,
+        PAYLOAD: {},
+        API_PARAMS: {
+            postId: '' 
+        }
     }
 }

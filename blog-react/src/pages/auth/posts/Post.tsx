@@ -13,41 +13,57 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState, useRef, useMemo } from "react";
 import { Box } from "@mui/material";
-import { httpService } from "../../services/httpService";
-import { API_REQUESTS } from "../../common/apiRequests";
-import { useNavigate } from "react-router-dom";
+import { API_REQUESTS } from "../../../common/apiRequests";
+import { httpService } from "../../../services/httpService";
+import { useParams } from "react-router-dom";
+import JoditEditor from 'jodit-react';
+import { updateUrlParams } from "../../../common/commonFunctions";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
 
-const Dashboard = () => {
+const Post = () => {
+  const { postId } = useParams();
   const [expanded, setExpanded] = useState(false);
-  const [posts, setPosts] = useState([]);
-  const navigate = useNavigate();
+  const [post, setPost] = useState<any>({});
+  const editor = useRef(null);
+  const [content, setContent] = useState('');
+
+  const config = useMemo(
+    () => ({
+        readonly: true, // all options from https://xdsoft.net/jodit/docs/,
+        placeholder: 'Start typings...',
+        width: '500'
+    }),
+    []
+);
   useEffect(() => {
-    getPosts();
+    // getPosts();
+    if(postId){
+        getPost()
+    }
   }, []);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const getPosts = async () => {
+  const getPost = async () => {
+    API_REQUESTS.GET_POST_DETAILS.URL = updateUrlParams(API_REQUESTS.GET_POST_DETAILS.URL, { postId: postId });
     try {
-      const res = await httpService(API_REQUESTS.GET_ALL_POSTS);
-      console.log(res);
-      setPosts(res);
+      const res = await httpService(API_REQUESTS.GET_POST_DETAILS);
+      setPost(res);
     } catch (error) {}
   };
 
   return (
     <Box margin={"auto"}>
       <Typography>Posts</Typography>
-      {posts?.map((post: any) => 
-        <Box marginTop={'10px'} onClick={() => {navigate(`/post/${post.id}`)}} >
-          <Card >
+      
+        <Box marginTop={'10px'}>
+          <Card>
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -70,15 +86,19 @@ const Dashboard = () => {
           />
           <CardContent>
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              This impressive paella is a perfect party dish and a fun meal to
-              cook together with your guests. Add 1 cup of frozen peas along
-              with the mussels, if you like.
+              {/* {post.description} */}
+              <JoditEditor
+			ref={editor}
+			value={post.description}
+			config={config}
+			onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+			onChange={(newContent) => {}}
+		/>
             </Typography>
           </CardContent>
         </Card>
         </Box>
-      )}
     </Box>
   );
 };
-export default memo(Dashboard);
+export default memo(Post);

@@ -70,8 +70,12 @@ export class PostsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.postsService.findOne(id);
+  findOne(@Param('id') id: number, @Request() req) {
+    const host = req.get('host');
+    return this.postsService.findOne(id).then((data: any) => {
+      data.imgUrl = `http://${host}/uploads/${data.image}`;
+      return data;
+    });
   }
 
   @Patch(':id')
