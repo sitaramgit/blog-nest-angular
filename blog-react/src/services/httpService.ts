@@ -6,18 +6,18 @@ import store from "../store/store";
 
 
 
+
 export const httpService = async (request: IApiService) => {
     const userDetails: any = store.getState().login?.userDetails
     const httpRequest: any =  {
         POST: async (postRequest: IApiService) => {
-            console.log(postRequest, `${apiEndPoints.host_api.host}${postRequest.URL}`, {headers: {
-                Authorization: `Bearer ${userDetails.token}`
-              }})
             try {
                 const response = await axios.post(`${apiEndPoints.host_api.host}${postRequest.URL}`, postRequest.PAYLOAD);
                 return response.data;
-            } catch (error) {
-                console.log(error);
+            } catch (error: any) {
+                if(error.status === 401){
+                    localStorage.clear()
+                }
                 throw error;
             }
         },
@@ -27,8 +27,10 @@ export const httpService = async (request: IApiService) => {
                     Authorization: `Bearer ${userDetails.token}`
                   }});
                 return response.data;
-            } catch (error) {
-                console.log(error);
+            } catch (error: any) {
+                if(error.status === 401){
+                    localStorage.clear()
+                }
                 throw error;
             }
         },
@@ -38,8 +40,10 @@ export const httpService = async (request: IApiService) => {
                     Authorization: `Bearer ${userDetails.token}`
                   }});
                 return response.data;
-            } catch (error) {
-                console.log(error);
+            } catch (error: any) {
+                if(error.status === 401){
+                    localStorage.clear()
+                }
                 throw error;
             }
         },
@@ -49,8 +53,10 @@ export const httpService = async (request: IApiService) => {
                     Authorization: `Bearer ${userDetails.token}`
                   }});
                 return response.data;
-            } catch (error) {
-                console.log(error);
+            } catch (error: any) {
+                if(error.status === 401){
+                    localStorage.clear()
+                }
                 throw error;
             }
         }

@@ -69,6 +69,7 @@ export class PostsController {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: number, @Request() req) {
     const host = req.get('host');

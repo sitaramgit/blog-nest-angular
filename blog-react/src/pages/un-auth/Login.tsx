@@ -1,6 +1,6 @@
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -44,6 +44,32 @@ const Login = () => {
     formState: { errors },
   } = useForm<any>();
 
+  let word1 = "abc";
+  let word2 = "pqrmn";
+  let mergedText = '';
+  useEffect(() => {
+    merge()
+  }, [])
+
+  const merge = () => {
+    let maxLength = Math.max(word1.length, word2.length);
+    //example 1
+    // for(let i=0; i<word1.length; i++) {
+    //   mergedText += word1[i] + word2[i]
+    // }
+    // console.log(mergedText);
+
+    // example2
+    let i=0; let j=0;
+    while(i < word1.length || j < word2.length) {
+      mergedText += word1[i] || '';
+      mergedText += word2[j] || '';
+      i ++
+      j++
+    }
+    console.log(mergedText);
+  }
+
   const onSubmit = handleSubmit((data) => {
     login(data);
   });
@@ -64,6 +90,8 @@ const Login = () => {
       closeLoader()
     }
   };
+
+
 
   // const loginWithGoogle = useGoogleLogin({
   //   onSuccess: async ({ code }) => {
